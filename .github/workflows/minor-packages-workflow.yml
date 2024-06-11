@@ -1,0 +1,69 @@
+name: minor-packages-workflow
+  
+on:
+  push:  
+    branches: [ 'github-docker' ] 
+  workflow_run:    
+    workflows: "Create Artifacts and pass runid"  
+    branches: [ 'github-workflow' ] 
+    types:   
+      - completed  
+  workflow_dispatch:
+env:
+  RUN_ID: ${{ github.run_id }}
+ 
+jobs:
+       
+  build-minor-packages:
+     strategy:
+      #fail-fast: true
+      matrix:
+          #os: [  'd12'  ]
+          #os: [  'ol8', 'el9', 'd10', 'u18', 'u20'  ]
+          os: [   'ol8', 'el9' ]
+     runs-on: ubuntu-latest
+
+     steps:
+        - name: Check out Repo
+          uses: actions/checkout@v4
+          with:
+           ref: 5.1.0
+
+        #- name: Start Oracle Linux 8 container with systemd
+        #  run: |
+        #   docker run --privileged -d --name my_oraclelinux8_container -v /sys/fs/cgroup:/sys/fs/cgroup:ro oraclelinux:8 /usr/sbin/init
+        
+           
+        - name: run docker oneshot builder
+          run: |
+           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+        #Stash the artifacts
+        - uses: actions/upload-artifact@v3
+          with:
+            # Name the artifact uniquely
+            name: ${{ github.event.repository.name }}-${{ matrix.os }}
+            # Where the finished product lives after the build
+            path: unibuild-repo
+            # Don't keep these for long.  This is just a test.
+            retention-days: 5
+
+        # Display the GitHub Run ID for debugging
+        - name: Display GitHub Run ID
+          run: echo '${{ github.run_id }}'
+
+                 # Build psconfig
+        - name: Pass Workflow to psconfig
+          uses: actions/github-script@v6
+          with:
+           github-token: ${{ secrets.GIT_ACTIONS }}
+           script: |
+             await github.rest.actions.createWorkflowDispatch({
+               owner: 'cs1867',
+               repo: 'i2util',
+               workflow_id: 'i2util-docker.yml',
+               ref: 'github-docker',
+               inputs: {
+                 OS: '${{ matrix.os }}',
+                 MINORPACKAGEID: '${{ github.run_id }}'
+               }
+             }) 
