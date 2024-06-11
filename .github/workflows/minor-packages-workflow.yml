@@ -57,7 +57,7 @@ jobs:
                owner: 'cs1867',
                repo: 'i2util',
                workflow_id: 'i2util-docker.yml',
-               ref: 'github-docker',
+               ref: 'github-workflow',
                inputs: {
                  OS: '${{ matrix.os }}',
                  MINORPACKAGEID: '${{ github.run_id }}'
