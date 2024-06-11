@@ -56,7 +56,7 @@ jobs:
              await github.rest.actions.createWorkflowDispatch({
                owner: 'cs1867',
                repo: 'i2util',
-               workflow_id: 'i2util-docker.yml',
+               workflow_id: 'i2util-workflow.yml',
                ref: 'github-workflow',
                inputs: {
                  OS: '${{ matrix.os }}',
