@@ -27,16 +27,12 @@ jobs:
         - name: Check out Repo
           uses: actions/checkout@v4
           with:
-           ref: 5.1.0
-
-        #- name: Start Oracle Linux 8 container with systemd
-        #  run: |
-        #   docker run --privileged -d --name my_oraclelinux8_container -v /sys/fs/cgroup:/sys/fs/cgroup:ro oraclelinux:8 /usr/sbin/init
-        
+           ref: 5.2.0
            
         - name: run docker oneshot builder
           run: |
            curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+       
         #Stash the artifacts
         - uses: actions/upload-artifact@v3
           with:
