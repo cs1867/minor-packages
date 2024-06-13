@@ -1,6 +1,6 @@
 name: minor-packages-workflow
     
-on: 
+on:  
   push:     
     branches: [ 'github-workflow' ]  
   workflow_run:   
