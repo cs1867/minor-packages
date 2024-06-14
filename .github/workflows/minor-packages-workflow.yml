@@ -41,6 +41,7 @@ jobs:
         - name: Use build_vars.json
           run: |
            cat build_vars.json
+           jq 'del(.repos[0])' perf.json
  
            
   #      - name: run docker oneshot builder
@@ -60,7 +61,14 @@ jobs:
         # Display the GitHub Run ID for debugging
         - name: Display GitHub Run ID
           run: echo '${{ github.run_id }}'
-
+       
+        
+        - name:  build_vars.json
+          run: |
+           cat build_vars.json
+           jq 'del(.repos[0])' build_vars.json
+           jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }' build_vars.json
+           cat build_vars.json
                
     #    - name: Pass Workflow to i2util
     #      uses: actions/github-script@v6
