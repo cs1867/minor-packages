@@ -35,7 +35,7 @@ jobs:
           run: |
             git clone https://github.com/cs1867/project.git project
             ls -al project
-            cp toolbox/workflows/build_vars.json .
+            cp project/toolbox/workflows/build_vars.json .
             
   
         - name: Use build_vars.json
