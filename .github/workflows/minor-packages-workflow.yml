@@ -33,7 +33,7 @@ jobs:
           env:
              github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
-            git clone https://github.com/cs1867/project 
+            https://github.com/cs1867/project.git 
             ls -al 
             
   
