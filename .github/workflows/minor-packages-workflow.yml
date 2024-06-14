@@ -59,7 +59,7 @@ jobs:
         
         - name: update build_vars.json
           run: |
-           cat build_vars.json\
+           cat build_vars.json
             echo "1***********************"
            jq 'del(.repos[0])' build_vars.json
             echo "2***********************"
