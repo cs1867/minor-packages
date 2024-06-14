@@ -87,7 +87,7 @@ jobs:
             BUILD_VARS_JSON=$(cat build_vars.json)
             echo "::set-output name=build_vars::$BUILD_VARS_JSON"   
 
-          
+           
         - name: Pass Workflow to i2util
           uses: actions/github-script@v6
           with:
