@@ -65,11 +65,9 @@ jobs:
            mv tmp.json  build_vars.json
             echo "cat ***********************"
             cat build_vars.json
-            echo " add id***********************"
+            echo " add run id***********************"
            jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build_vars.json  
-            echo "cp tmp file***********************"
-           mv tmp.json  build_vars.json
-           echo "cat ***********************" 
+           echo "cat final ouput ***********************" 
            cat build_vars.json
             
                
