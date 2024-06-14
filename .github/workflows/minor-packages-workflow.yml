@@ -60,13 +60,15 @@ jobs:
         - name: update build_vars.json
           run: |
            cat build_vars.json
-            echo "1***********************"
+            echo "delete ***********************"
            jq 'del(.repos[0])' build_vars.json
-            echo "2***********************"
+            echo "cat ***********************"
+            cat build_vars.json
+            echo " add id***********************"
            jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build_vars.json > tmp.json
-            echo "3***********************"
+            echo "cp tmp file***********************"
            mv tmp.json  build_vars.json
-           echo "4***********************" 
+           echo "cat ***********************" 
            cat build_vars.json
             
                
