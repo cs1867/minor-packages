@@ -40,7 +40,7 @@ jobs:
   
         - name: Use build_vars.json
           run: |
-           ls -al  build_vars.json
+           cat build_vars.json
  
            
   #      - name: run docker oneshot builder
