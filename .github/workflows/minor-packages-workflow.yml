@@ -79,21 +79,27 @@ jobs:
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
 
         - name: Display NEXTREPO value
-          run: echo "The value of NEXTREPO is $NEXTREPO"    
+          run: echo "The value of NEXTREPO is $NEXTREPO"   
+
+        - name: Set build_vars.json as workflow variable
+          id: set_build_vars
+          run: |
+            BUILD_VARS_JSON=$(cat build_vars.json)
+            echo "::set-output name=build_vars::$BUILD_VARS_JSON"   
 
           
-    #    - name: Pass Workflow to i2util
-    #      uses: actions/github-script@v6
-    #      with:
-    #       github-token: ${{ secrets.GIT_ACTIONS }}
-    #       script: |
-    #         await github.rest.actions.createWorkflowDispatch({
-    #           owner: 'cs1867',
-    #           repo: 'i2util',
-    #           workflow_id: 'i2util-workflow.yml',
-    #           ref: 'github-workflow',
-    #          inputs: {
-    #             OS: '${{ matrix.os }}',
-    #             MINORPACKAGEID: '${{ github.run_id }}'
-    #           }
-    #         }) 
+        - name: Pass Workflow to i2util
+          uses: actions/github-script@v6
+          with:
+           github-token: ${{ secrets.GIT_ACTIONS }}
+           script: |
+             await github.rest.actions.createWorkflowDispatch({
+               owner: 'cs1867',
+               repo:  '${{ env.NEXTREPO}}',
+               workflow_id: '${{ env.NEXTREPO }}-workflow.yml',
+               ref: 'github-workflow',
+              inputs: {
+                 OS: '${{ matrix.os }}',
+                 BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
+               }
+             }) 
