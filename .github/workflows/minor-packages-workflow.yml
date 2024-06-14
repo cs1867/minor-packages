@@ -66,7 +66,8 @@ jobs:
             echo "cat ***********************"
             cat build_vars.json
             echo " add run id***********************"
-           jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build_vars.json  
+           jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build_vars.json  > tmp.json
+           mv tmp.json  build_vars.json
            echo "cat final ouput ***********************" 
            cat build_vars.json
             
