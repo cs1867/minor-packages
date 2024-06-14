@@ -28,38 +28,50 @@ jobs:
           uses: actions/checkout@v4
           with:
            ref: 5.2.0
-           
-        - name: run docker oneshot builder
+
+        - name: Fetch build_vars.json from projects
+          env:
+             github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
-           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+            git clone https://github.com/cs1867/project project-repo
+            cp project-repo/workflow/build_vars.json .
+ 
+        - name: Use build_vars.json
+          run: |
+           ls -al  build_vars.json
+ 
+           
+  #      - name: run docker oneshot builder
+  #        run: |
+  #         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
        
-        #Stash the artifacts
-        - uses: actions/upload-artifact@v3
-          with:
-            # Name the artifact uniquely
-            name: ${{ github.event.repository.name }}-${{ matrix.os }}
-            # Where the finished product lives after the build
-            path: unibuild-repo
-            # Don't keep these for long.  This is just a test.
-            retention-days: 5
+  #      #Stash the artifacts
+  #      - uses: actions/upload-artifact@v3
+  #        with:
+  #          # Name the artifact uniquely
+  #          name: ${{ github.event.repository.name }}-${{ matrix.os }}
+  #          # Where the finished product lives after the build
+  #          path: unibuild-repo
+  #          # Don't keep these for long.  This is just a test.
+  #          retention-days: 5
 
         # Display the GitHub Run ID for debugging
         - name: Display GitHub Run ID
           run: echo '${{ github.run_id }}'
 
                
-        - name: Pass Workflow to i2util
-          uses: actions/github-script@v6
-          with:
-           github-token: ${{ secrets.GIT_ACTIONS }}
-           script: |
-             await github.rest.actions.createWorkflowDispatch({
-               owner: 'cs1867',
-               repo: 'i2util',
-               workflow_id: 'i2util-workflow.yml',
-               ref: 'github-workflow',
-               inputs: {
-                 OS: '${{ matrix.os }}',
-                 MINORPACKAGEID: '${{ github.run_id }}'
-               }
-             }) 
+    #    - name: Pass Workflow to i2util
+    #      uses: actions/github-script@v6
+    #      with:
+    #       github-token: ${{ secrets.GIT_ACTIONS }}
+    #       script: |
+    #         await github.rest.actions.createWorkflowDispatch({
+    #           owner: 'cs1867',
+    #           repo: 'i2util',
+    #           workflow_id: 'i2util-workflow.yml',
+    #           ref: 'github-workflow',
+    #          inputs: {
+    #             OS: '${{ matrix.os }}',
+    #             MINORPACKAGEID: '${{ github.run_id }}'
+    #           }
+    #         }) 
