@@ -36,12 +36,6 @@ jobs:
             git clone https://github.com/cs1867/project.git project
             ls -al project
             cp project/toolbox/workflows/build_vars.json .
-            
-  
-        - name: Use build_vars.json
-          run: |
-           cat build_vars.json
-           jq 'del(.repos[0])' perf.json
  
            
   #      - name: run docker oneshot builder
@@ -63,7 +57,7 @@ jobs:
           run: echo '${{ github.run_id }}'
        
         
-        - name:  build_vars.json
+        - name: update build_vars.json
           run: |
            cat build_vars.json
            jq 'del(.repos[0])' build_vars.json
