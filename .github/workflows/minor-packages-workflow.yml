@@ -67,6 +67,7 @@ jobs:
             echo "3***********************"
            mv tmp.json  build_vars.json
            echo "4***********************" 
+           cat build_vars.json
             
                
     #    - name: Pass Workflow to i2util
