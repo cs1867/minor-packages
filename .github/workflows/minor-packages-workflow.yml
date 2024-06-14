@@ -84,7 +84,7 @@ jobs:
         - name: Set build_vars.json as workflow variable
           id: set_build_vars
           run: |
-            BUILD_VARS_JSON=$(cat build_vars.json)
+            BUILD_VARS_JSON=$(jq -r . build_vars.json )
             echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV 
       
 
