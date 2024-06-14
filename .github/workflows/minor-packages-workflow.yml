@@ -85,7 +85,8 @@ jobs:
           id: set_build_vars
           run: |
             BUILD_VARS_JSON=$(cat build_vars.json)
-            echo "::set-output name=build_vars::$BUILD_VARS_JSON"   
+            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV 
+      
 
         - name: Display BUILD_VARS_JSON
           run: |
