@@ -37,19 +37,19 @@ jobs:
             ls -al project
             cp project/toolbox/workflows/build_vars.json .
            
-  #      - name: run docker oneshot builder
-  #        run: |
-  #         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+        - name: run docker oneshot builder
+          run: |
+           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
        
-  #      #Stash the artifacts
-  #      - uses: actions/upload-artifact@v3
-  #        with:
-  #          # Name the artifact uniquely
-  #          name: ${{ github.event.repository.name }}-${{ matrix.os }}
-  #          # Where the finished product lives after the build
-  #          path: unibuild-repo
-  #          # Don't keep these for long.  This is just a test.
-  #          retention-days: 5
+        #Stash the artifacts
+        - uses: actions/upload-artifact@v3
+          with:
+            # Name the artifact uniquely
+            name: ${{ github.event.repository.name }}-${{ matrix.os }}
+            # Where the finished product lives after the build
+            path: unibuild-repo
+            # Don't keep these for long.  This is just a test.
+            retention-days: 5
 
 
         - name: update build_vars.json
