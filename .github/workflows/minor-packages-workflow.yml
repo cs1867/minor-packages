@@ -36,7 +36,6 @@ jobs:
             git clone https://github.com/cs1867/project.git project
             ls -al project
             cp project/toolbox/workflows/build_vars.json .
- 
            
   #      - name: run docker oneshot builder
   #        run: |
@@ -52,24 +51,13 @@ jobs:
   #          # Don't keep these for long.  This is just a test.
   #          retention-days: 5
 
-        # Display the GitHub Run ID for debugging
-        - name: Display GitHub Run ID
-          run: echo '${{ github.run_id }}'
-       
-        
+
         - name: update build_vars.json
           run: |
-           cat build_vars.json
-            echo "delete ***********************"
            jq 'del(.repos[0])' build_vars.json > tmp.json
            mv tmp.json  build_vars.json
-            echo "cat ***********************"
-            cat build_vars.json
-            echo " add run id***********************"
            jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build_vars.json  > tmp.json
            mv tmp.json  build_vars.json
-           echo "cat final ouput ***********************" 
-           cat build_vars.json
             
         - name: Extract repo name
           id: extract_repo_name
@@ -77,21 +65,13 @@ jobs:
             jq -r '.repos[0].name' build_vars.json
             NEXTREPO=$(jq -r '.repos[0].name' build_vars.json )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
-
-        - name: Display NEXTREPO value
-          run: echo "The value of NEXTREPO is $NEXTREPO"   
-
+ 
         - name: Set build_vars.json as workflow variable
           id: set_build_vars
           run: |
            BUILD_VARS_JSON=$(jq -c . build_vars.json)
            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
-      
-
-        - name: Display BUILD_VARS_JSON
-          run: |
-            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"    
 
            
         - name: Pass Workflow to i2util
