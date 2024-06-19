@@ -20,7 +20,7 @@ jobs:
       matrix:
           #os: [  'd12'  ]
           #os: [  'ol8', 'el9', 'd10', 'u18', 'u20'  ]
-          os: [ 'ol8' ]
+          os: [ 'ol8' , 'el9' ]
      runs-on: ubuntu-latest
 
      steps:
