@@ -107,7 +107,7 @@ jobs:
                owner: 'cs1867',
                repo:  '${{ env.NEXTREPO}}',
                workflow_id: '${{ env.NEXTREPO }}-workflow.yml',
-               ref: 'github-workflow777',
+               ref: 'github-workflow',
               inputs: {
                  OS: '${{ matrix.os }}',
                  BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
