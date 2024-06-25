@@ -45,7 +45,7 @@ jobs:
             
         - name: Add start time to build_vars.json
           run: |
-            jq '.buildstats += {"start_time": "${{ env.start_time }}"}' build_vars.json > updated_build_vars.json
+            jq '.buildstats += {"OS": "${{ matrix.os }}","start_time": "${{ env.start_time }}","${{ github.event.repository.name }}": "${{ env.start_time }}"}' build_vars.json > updated_build_vars.json
             mv updated_build_vars.json build_vars.json
 
         - name: Display build_vars.json with start time
@@ -53,7 +53,7 @@ jobs:
            
         - name: run docker oneshot builder
           run: |
-           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+        #   curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
        
         #Stash the artifacts
         - uses: actions/upload-artifact@v3
@@ -78,6 +78,12 @@ jobs:
             jq -r '.repos[0].name' build_vars.json
             NEXTREPO=$(jq -r '.repos[0].name' build_vars.json )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
+
+        - name: Add end time to build_vars.json
+          run: |
+            run: echo "end_time=$(date -u)" >> $GITHUB_ENV
+            jq '.buildstats += {"${{ github.event.repository.name }}": "${{ env.end_time }}"}' build_vars.json > updated_build_vars.json
+            mv updated_build_vars.json build_vars.json    
  
         - name: Set build_vars.json as workflow variable
           id: set_build_vars
@@ -85,7 +91,6 @@ jobs:
            BUILD_VARS_JSON=$(jq -c . build_vars.json)
            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
-
            
         - name: Pass Workflow
           uses: actions/github-script@v6
@@ -96,7 +101,7 @@ jobs:
                owner: 'cs1867',
                repo:  '${{ env.NEXTREPO}}',
                workflow_id: '${{ env.NEXTREPO }}-workflow.yml',
-               ref: 'github-workflow',
+               ref: 'github-workflow777',
               inputs: {
                  OS: '${{ matrix.os }}',
                  BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
