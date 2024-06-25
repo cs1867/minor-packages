@@ -47,9 +47,6 @@ jobs:
           run: |
             jq '.buildstats += { "OS": "${{ matrix.os }}", "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}": "${{ env.start_time }}" }' build_vars.json > updated_build_vars.json
             mv updated_build_vars.json build_vars.json
-
-        - name: Display build_vars.json with start time
-          run: cat build_vars.json
            
         - name: run docker oneshot builder
           run: |
@@ -83,7 +80,10 @@ jobs:
           run: |
             echo "end_time=$(date -u)" >> $GITHUB_ENV
             jq '.buildstats += {"${{ github.event.repository.name }}": "${{ env.end_time }}"}' build_vars.json > updated_build_vars.json
-            mv updated_build_vars.json build_vars.json    
+            mv updated_build_vars.json build_vars.json
+        
+        - name: Display build_vars.json  
+          run: cat build_vars.json
  
         - name: Set build_vars.json as workflow variable
           id: set_build_vars
