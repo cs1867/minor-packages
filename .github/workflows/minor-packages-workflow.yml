@@ -26,6 +26,10 @@ jobs:
      runs-on: ubuntu-latest
 
      steps:
+        - name: Capture start date and time
+          id: start_time
+          run: echo "start_time=$(date -u)" >> $GITHUB_ENV
+
         - name: Check out Repo
           uses: actions/checkout@v4
           with:
@@ -38,6 +42,14 @@ jobs:
             git clone https://github.com/cs1867/project.git project
             ls -al project
             cp project/toolbox/workflows/build_vars.json .
+            
+        - name: Add start time to build_vars.json
+          run: |
+            jq '.buildstats += {"start_time": "${{ env.start_time }}"}' build_vars.json > updated_build_vars.json
+            mv updated_build_vars.json build_vars.json
+
+        - name: Display build_vars.json with start time
+          run: cat build_vars.json
            
         - name: run docker oneshot builder
           run: |
@@ -52,7 +64,6 @@ jobs:
             path: unibuild-repo
             # Don't keep these for long.  This is just a test.
             retention-days: 5
-
 
         - name: update build_vars.json
           run: |
