@@ -75,7 +75,7 @@ jobs:
             NEXTREPO=$(jq -r '.repos[0].name' build_vars.json )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
 
-        - name: Capture start date and time
+        - name: Capture start end and time
           id: end_time
           run: echo "end_time=$(date -u)" >> $GITHUB_ENV
         
@@ -85,7 +85,7 @@ jobs:
             mv updated_build_vars.json build_vars.json
         
         - name: Display build_vars.json  
-          run: cat build_vars.json
+          run: jq .buildstats build_vars.json
  
         - name: Set build_vars.json as workflow variable
           id: set_build_vars
