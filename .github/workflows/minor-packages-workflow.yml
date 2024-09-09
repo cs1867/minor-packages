@@ -90,6 +90,7 @@ jobs:
            BUILD_VARS_JSON=$(jq -c . build_vars.json)
            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
+           
         - name: Pass Workflow
           uses: actions/github-script@v6
           with:
