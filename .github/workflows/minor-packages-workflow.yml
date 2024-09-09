@@ -49,19 +49,17 @@ jobs:
         - name: Display build_vars.json
           run: cat build_vars.json
 
-        #- name: run docker oneshot builder
-        #  run: |
-        #   echo " run the oneshot"
-        #
-        #   curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
-
-
-        # TODO:  UNCOMMMENT
-        #- uses: actions/upload-artifact@v3
-        #  with:
-        #    name: ${{ github.event.repository.name }}-${{ matrix.os }}
-        #    path: unibuild-repo
-        #    retention-days: 5
+        - name: run docker oneshot builder
+          run: |
+           echo " run the oneshot"
+        
+           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+ 
+        - uses: actions/upload-artifact@v3
+          with:
+            name: ${{ github.event.repository.name }}-${{ matrix.os }}
+            path: unibuild-repo
+            retention-days: 5
 
         - name: update build_vars.json
           run: |
