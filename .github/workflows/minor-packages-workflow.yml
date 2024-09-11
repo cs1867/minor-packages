@@ -1,7 +1,7 @@
 name: minor-packages-workflow
 
 on: 
-  schedule:
+  schedule: 
     - cron: "0 13 * * *" 
   push:
     branches: [ 'github-workflow' ] 
