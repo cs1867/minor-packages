@@ -42,8 +42,8 @@ jobs:
             git clone https://github.com/cs1867/project.git project
             ls -al project
             cp project/toolbox/workflows/build_vars.json .
-            ls -al  
-            cat build_vars_.json
+            pwd
+            cat project/build_vars_.json
             
         - name: Add start time to build_vars.json
           run: |
