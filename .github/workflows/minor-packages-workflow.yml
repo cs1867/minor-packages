@@ -22,7 +22,7 @@ jobs:
       #fail-fast: true
       matrix:
           #os: [  'ol8', 'el9', 'd11', 'd12', 'u20', 'u22'  ]
-          os: [  ol8'  ]  
+          os: [  'ol8'  ]  
      runs-on: ubuntu-latest
 
      steps:
@@ -40,14 +40,13 @@ jobs:
              github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
             git clone https://github.com/cs1867/project.git project
-            ls -al project/toolbox/workflows/build_vars.json
             cp project/toolbox/workflows/build_vars.json .
-            pwd
              
-       # - name: Add start time to build_vars.json
-       #   run: |
-       #     jq '.buildstats += { "OS": "${{ matrix.os }}", "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' build_vars.json > updated_build_vars.json
-       #     mv updated_build_vars.json build_vars.json
+        - name: Add start time to build_vars.json
+          run: |
+            jq '.buildstats += { "OS": "${{ matrix.os }}", "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' build_vars.json > updated_build_vars.json
+            mv updated_build_vars.json build_vars.json
+            
         - name: Display build_vars.json
           run: cat build_vars.json
 
