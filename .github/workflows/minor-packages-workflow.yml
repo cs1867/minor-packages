@@ -8,7 +8,7 @@ on:
   workflow_run:
     workflows: "Create Artifacts and pass runid"
     branches: [ 'github-workflow' ]
-    types:
+    types: 
       - completed 
   workflow_dispatch:
 env:
