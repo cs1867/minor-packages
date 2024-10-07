@@ -44,7 +44,7 @@ jobs:
              
         - name: Add start time to build_vars.json
           run: |
-            jq '.buildstats += { "OS": "${{ matrix.os }}","BUILD_TYPE": "${{ env.BUILD_BRANCH }}",  "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' build_vars.json > updated_build_vars.json
+            jq '.buildstats += { "OS": "${{ matrix.os }}", "BUILD_BRANCH": "${{ env.BUILD_BRANCH }}", "BUILD_TYPE": "${{ env.BUILD_TYPE }}", "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' build_vars.json > updated_build_vars.json
             mv updated_build_vars.json build_vars.json
             
         - name: Display build_vars.json
