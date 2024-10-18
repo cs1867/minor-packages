@@ -26,6 +26,15 @@ jobs:
      runs-on: ubuntu-latest
 
      steps:
+
+        - name: Check if triggered by cron
+          if: ${{ github.event_name == 'schedule' }}
+          run: echo "This was triggered by the cron schedule."
+
+        - name: Check if triggered by push
+          if: ${{ github.event_name == 'push' }}
+          run: echo "This was triggered by a push event."
+          
         - name: Capture start date and time
           id: start_time
           run: echo "start_time=$(date -u)" >> $GITHUB_ENV
