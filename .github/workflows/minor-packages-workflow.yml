@@ -1,4 +1,4 @@
-name: minor-packages-workflow
+name: minor-packages-workflow 
 
 on:
   schedule:
