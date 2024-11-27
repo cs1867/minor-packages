@@ -49,7 +49,8 @@ jobs:
              github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
             git clone https://github.com/cs1867/project.git project
-            ls project
+            echo "list dir"
+            ls project/toolbox/workflows/
              case "${{ matrix.os }}" in
               'ol8'|'el9')
                  cp project/toolbox/workflows/build-vars-el.json build_vars.json
