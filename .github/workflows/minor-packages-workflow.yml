@@ -49,7 +49,7 @@ jobs:
              github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
             git clone https://github.com/cs1867/project.git project
-            case "${{ env.BUILD_OS }}" in
+             case "${{ matrix.os }}" in
               'ol8'|'el9')
                  cp project/toolbox/workflows/build-vars-el.sh build_vars.json
                  ;;
