@@ -49,7 +49,15 @@ jobs:
              github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
             git clone https://github.com/cs1867/project.git project
-            cp project/toolbox/workflows/build_vars.json .
+            case "${{ env.BUILD_OS }}" in
+              'ol8'|'el9')
+                 cp project/toolbox/workflows/build-vars-el.sh build_vars.json
+                 ;;
+              'd11'|'d12'|'u20'|'u24')
+                cp project/toolbox/workflows/github-db-workflow.sh build_vars.json
+                ;;
+            esac
+             
              
         - name: Add start time to build_vars.json
           run: |
