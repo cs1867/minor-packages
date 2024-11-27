@@ -44,7 +44,7 @@ jobs:
           with:
            ref: ${{ env.BUILD_BRANCH }}
 
-        - name: Fetch build_vars.json from projects
+        - name: Fetch build-vars.json from projects
           env:
              github-token: ${{ secrets.GIT_ACTIONS }}
           run: |
@@ -53,7 +53,7 @@ jobs:
             ls project/toolbox/workflows/
              case "${{ matrix.os }}" in
               'ol8'|'el9')
-                 cp project/toolbox/workflows/build-vars-el.json build_vars.json
+                 cp project/toolbox/workflows/build-vars-el.json build-vars.json
                  ;;
               'd11'|'d12'|'u20'|'u24')
                 cp project/toolbox/workflows/bulid-vars-ub.json build-vars.json
@@ -61,13 +61,13 @@ jobs:
             esac
              
              
-        - name: Add start time to build_vars.json
+        - name: Add start time to build-vars.json
           run: |
-            jq '.buildstats += { "OS": "${{ matrix.os }}", "BUILD_BRANCH": "${{ env.BUILD_BRANCH }}", "BUILD_TYPE": "${{ env.BUILD_TYPE }}", "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' build_vars.json > updated_build_vars.json
-            mv updated_build_vars.json build_vars.json
+            jq '.buildstats += { "OS": "${{ matrix.os }}", "BUILD_BRANCH": "${{ env.BUILD_BRANCH }}", "BUILD_TYPE": "${{ env.BUILD_TYPE }}", "start_time": "${{ env.start_time }}", "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' build-vars.json > updated_build-vars.json
+            mv updated_build-vars.json build-vars.json
             
-        - name: Display build_vars.json
-          run: cat build_vars.json
+        - name: Display build-vars.json
+          run: cat build-vars.json
 
         - name: run docker oneshot builder
           run: |
@@ -80,37 +80,37 @@ jobs:
             path: unibuild-repo
             retention-days: 5
 
-        - name: update build_vars.json
+        - name: update build-vars.json
           run: |
-           jq 'del(.repos[0])' build_vars.json > tmp.json
-           mv tmp.json  build_vars.json
-           jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build_vars.json  > tmp.json
-           mv tmp.json  build_vars.json
+           jq 'del(.repos[0])' build-vars.json > tmp.json
+           mv tmp.json  build-vars.json
+           jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build-vars.json  > tmp.json
+           mv tmp.json  build-vars.json
            
         - name: Extract repo name
           id: extract_repo_name
           run: |
-            jq -r '.repos[0].name' build_vars.json
-            NEXTREPO=$(jq -r '.repos[0].name' build_vars.json )
+            jq -r '.repos[0].name' build-vars.json
+            NEXTREPO=$(jq -r '.repos[0].name' build-vars.json )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV
             
         - name: Capture start end and time
           id: end_time
           run: echo "end_time=$(date -u)" >> $GITHUB_ENV
 
-        - name: Add end time to build_vars.json
+        - name: Add end time to build-vars.json
           run: |
-            jq '.buildstats += {"${{ github.event.repository.name }}-end": "${{ env.end_time }}"}' build_vars.json > updated_build_vars.json
-            mv updated_build_vars.json build_vars.json
-        - name: Display build_vars.json
-          run: jq .buildstats build_vars.json
+            jq '.buildstats += {"${{ github.event.repository.name }}-end": "${{ env.end_time }}"}' build-vars.json > updated_build-vars.json
+            mv updated_build-vars.json build-vars.json
+        - name: Display build-vars.json
+          run: jq .buildstats build-vars.json
 
-        - name: Set build_vars.json as workflow variable
-          id: set_build_vars
+        - name: Set build-vars.json as workflow variable
+          id: set_build-vars
           run: |
-           BUILD_VARS_JSON=$(jq -c . build_vars.json)
-           echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
-           echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
+           build-varS_JSON=$(jq -c . build-vars.json)
+           echo "build-varS_JSON=${build-varS_JSON}" >> $GITHUB_ENV
+           echo "build-varS_JSON=${build-varS_JSON}"
            
         - name: Pass Workflow
           if: env.BUILD_TYPE == 'FULL'
@@ -124,6 +124,6 @@ jobs:
                workflow_id: '${{ env.NEXTREPO }}-workflow.yml',
                ref: 'github-workflow',
               inputs: {
-                 BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
+                 build-varS_JSON: '${{ env.build-varS_JSON}}'
                }
              })
