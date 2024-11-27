@@ -69,16 +69,16 @@ jobs:
         - name: Display build-vars.json
           run: cat build-vars.json
 
-      #  - name: run docker oneshot builder
-      #    run: |
-       #    echo " run the oneshot"
-       #    curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+        - name: run docker oneshot builder
+          run: |
+           echo " run the oneshot"
+           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
  
-     #   - uses: actions/upload-artifact@v3
-     #     with:
-     #       name: ${{ github.event.repository.name }}-${{ matrix.os }}
-     #       path: unibuild-repo
-     #       retention-days: 5
+        - uses: actions/upload-artifact@v3
+          with:
+            name: ${{ github.event.repository.name }}-${{ matrix.os }}
+            path: unibuild-repo
+            retention-days: 5
 
         - name: update build-vars.json
           run: |
@@ -102,8 +102,6 @@ jobs:
           run: |
             jq '.buildstats += {"${{ github.event.repository.name }}-end": "${{ env.end_time }}"}' build-vars.json > updated_build-vars.json
             mv updated_build-vars.json build-vars.json
-        - name: Display build-vars.json
-          run: jq .buildstats build-vars.json
 
         - name: Set build-vars.json as workflow variable
           id: set_build-vars
