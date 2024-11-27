@@ -107,8 +107,8 @@ jobs:
           id: set_build-vars
           run: |
            BUILD_VARS_JSON=$(jq -c . build-vars.json)
-           echo "BUILD_VARS_JSON=${build-varS_JSON}" >> $GITHUB_ENV
-           echo "BUILD_VARS_JSON=${build-varS_JSON}"
+           echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
+           echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
            
         - name: Pass Workflow
           if: env.BUILD_TYPE == 'FULL'
