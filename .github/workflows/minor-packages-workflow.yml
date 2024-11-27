@@ -54,7 +54,7 @@ jobs:
                  cp project/toolbox/workflows/build-vars-el.sh build_vars.json
                  ;;
               'd11'|'d12'|'u20'|'u24')
-                cp project/toolbox/workflows/build_vars.json build_vars.json
+                cp project/toolbox/workflows/build_vars.json .
                 ;;
             esac
              
