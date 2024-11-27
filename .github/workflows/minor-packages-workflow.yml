@@ -108,9 +108,9 @@ jobs:
         - name: Set build-vars.json as workflow variable
           id: set_build-vars
           run: |
-           build-varS_JSON=$(jq -c . build-vars.json)
-           echo "build-varS_JSON=${build-varS_JSON}" >> $GITHUB_ENV
-           echo "build-varS_JSON=${build-varS_JSON}"
+           BUILD_VARS_JSON=$(jq -c . build-vars.json)
+           echo "BUILD_VARS_JSON=${build-varS_JSON}" >> $GITHUB_ENV
+           echo "BUILD_VARS_JSON=${build-varS_JSON}"
            
         - name: Pass Workflow
           if: env.BUILD_TYPE == 'FULL'
@@ -124,6 +124,6 @@ jobs:
                workflow_id: '${{ env.NEXTREPO }}-workflow.yml',
                ref: 'github-workflow',
               inputs: {
-                 build-varS_JSON: '${{ env.build-varS_JSON}}'
+                 BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
                }
              })
