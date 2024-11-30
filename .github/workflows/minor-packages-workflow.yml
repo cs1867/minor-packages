@@ -10,7 +10,7 @@ on:
     branches: [ 'github-workflow' ]
     types: 
       - completed
-  workflow_dispatch:
+  workflow_dispatch: 
 env:
   RUN_ID: ${{ github.run_id }}
   BUILD_BRANCH: '5.2.0'
