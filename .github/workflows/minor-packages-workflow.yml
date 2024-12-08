@@ -1,6 +1,6 @@
 name: minor-packages-workflow
 
-on:
+on: 
   schedule: 
     - cron: "0 13 * * *" 
   push: 
