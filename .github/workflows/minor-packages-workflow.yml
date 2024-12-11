@@ -3,7 +3,7 @@ name: minor-packages-workflow
 on:
   schedule: 
     - cron: "0 13 * * *" 
-  push: 
+  push:  
     branches: [ 'github-workflow' ] 
   workflow_run: 
     workflows: "Create Artifacts and pass runid" 
@@ -18,7 +18,7 @@ env:
    
 jobs:  
 
-  build-minor-packages:
+  build-minor-packages: 
      strategy:  
       matrix:
           #os: [  'ol8', 'el9', 'd11', 'd12', 'u20', 'u22'  ]
