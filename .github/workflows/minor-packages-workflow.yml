@@ -16,7 +16,7 @@ env:
   BUILD_BRANCH: '5.2.0'
   BUILD_TYPE: 'FULL'
    
-jobs:  
+jobs:
 
   build-minor-packages: 
      strategy:  
