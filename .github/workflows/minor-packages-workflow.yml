@@ -2,11 +2,11 @@ name: minor-packages-workflow
 
 on:
   schedule:
-    - cron: "0 13 * * *" 
+    - cron: "20 21 * * *" 
   push:    
     branches: [ 'github-workflow' ] 
   workflow_run:   
-    workflows: "Create Artifacts and pass runid"  
+    workflows: "minor-packages-workflow"  
     branches: [ 'github-workflow' ] 
     types:   
       - completed 
