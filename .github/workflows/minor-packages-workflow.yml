@@ -6,7 +6,7 @@ on:
   push:    
     branches: [ 'github-workflow' ] 
   workflow_run:   
-    workflows: "minor-packages-workflow"  
+    workflows: "create workflow pass runid"  
     branches: [ 'github-workflow' ] 
     types:   
       - completed 
