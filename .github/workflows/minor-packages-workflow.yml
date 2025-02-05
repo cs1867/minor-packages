@@ -20,8 +20,8 @@ jobs:
      strategy:
       #fail-fast: true
       matrix:
-          #os: [  'ol8', 'el9', 'd11', 'd12', 'u20', 'u22'  ]
-          os: [  'ol8'  ] 
+          os: [  'ol8', 'el9', 'd11', 'd12', 'u20', 'u22'  ]
+          
      runs-on: ubuntu-latest
 
      steps:
