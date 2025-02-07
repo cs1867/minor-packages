@@ -2,9 +2,9 @@ name: minor-packages-workflow
 
 on:
   schedule:
-    - cron: "20 21 * * *" 
-  push:    
-    branches: [ 'github-workflow' ]  
+    - cron: "25 02 * * *" 
+  #push:    
+  #  branches: [ 'github-workflow' ]  
   workflow_run:
     workflows: "create workflow pass runid"  
     branches: [ 'github-workflow' ] 
