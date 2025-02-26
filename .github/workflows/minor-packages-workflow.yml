@@ -75,11 +75,11 @@ jobs:
        - name: Create a temporary artifact downloads folder
          run: mkdir aritfacts
 
+
        - name: run docker oneshot builder
          run: |
-           echo " run the oneshot"
-           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
- 
+          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
+          
        - uses: actions/upload-artifact@v4
          with:
             name: ${{ github.event.repository.name }}-${{ matrix.os }}
