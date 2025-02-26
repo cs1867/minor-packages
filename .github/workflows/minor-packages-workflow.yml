@@ -86,24 +86,15 @@ jobs:
             path: unibuild-repo
             retention-days: 5
 
-       - name: update build-vars.json
-         run: |
-           jq 'del(.repos[0])' build-vars.json > tmp.json
-           mv tmp.json  build-vars.json
-           jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build-vars.json  > tmp.json
-           mv tmp.json  build-vars.json
-
+       - name: Capture end date and time
+         id: end_time
+         run: echo "end_time=$(date -u)" >> $GITHUB_ENV
+       
        - name: Add end time to build-vars.json
          run: |
-            jq '.buildstats += {"${{ github.event.repository.name }}-end": "${{ env.end_time }}"}' build-vars.json > updated_build-vars.json
-            mv updated_build-vars.json build-vars.json
-
-       - name: Set build-vars.json as workflow variable
-         id: set_build-vars
-         run: |
-           BUILD_VARS_JSON=$(jq -c . build-vars.json)
-           echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
-           echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
+          modified_json=$(echo "$BUILD_VARS_JSON" | jq '.buildstats += { "${{ github.event.repository.name }}-end": "${{ env.end_time }}" }' )
+          BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
+          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
            
    #     - name: Pass Workflow
    #       if: env.BUILD_TYPE == 'FULL'
