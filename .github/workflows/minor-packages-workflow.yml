@@ -75,10 +75,10 @@ jobs:
        - name: Create a temporary artifact downloads folder
          run: mkdir aritfacts
 
-       - name: run docker oneshot builder
-         run: |
-           echo " run the oneshot"
-           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
+ #      - name: run docker oneshot builder
+ #        run: |
+ #          echo " run the oneshot"
+ #          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ matrix.os }}'
  
        - uses: actions/upload-artifact@v4
          with:
@@ -92,17 +92,6 @@ jobs:
            mv tmp.json  build-vars.json
            jq --arg run_id "${{ github.run_id }}" '.buildids += { "minor-packages": $run_id }'  build-vars.json  > tmp.json
            mv tmp.json  build-vars.json
-           
-       - name: Extract repo name
-         id: extract_repo_name
-         run: |
-            jq -r '.repos[0].name' build-vars.json
-            NEXTREPO=$(jq -r '.repos[0].name' build-vars.json )
-            echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV
-            
-       - name: Capture start end and time
-         id: end_time
-         run: echo "end_time=$(date -u)" >> $GITHUB_ENV
 
        - name: Add end time to build-vars.json
          run: |
