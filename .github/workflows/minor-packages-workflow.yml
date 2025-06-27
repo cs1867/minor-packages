@@ -43,10 +43,10 @@ jobs:
            echo "BUILD_BRANCHN=$BUILD_BRANCH"
            echo "BUILD_TYPE=$BUILD_TYPE"       
             
-       - name: Check out Repo
-         uses: actions/checkout@v4
-         with:
-           ref: ${{ env.BUILD_BRANCH }}
+    #  - name: Check out Repo
+    #     uses: actions/checkout@v4
+    #     with:
+    #       ref: ${{ env.BUILD_BRANCH }}
 
        - name: Delete current repo from build
          id: modify_json
@@ -76,15 +76,15 @@ jobs:
          run: mkdir aritfacts
 
 
-       - name: run docker oneshot builder
-         run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
+    #   - name: run docker oneshot builder
+    #     run: |
+    #      curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
           
-       - uses: actions/upload-artifact@v4
-         with:
-            name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
-            path: unibuild-repo
-            retention-days: 5
+     #  - uses: actions/upload-artifact@v4
+     #    with:
+     #       name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
+     #       path: unibuild-repo
+     #       retention-days: 5
 
        - name: Capture end date and time
          id: end_time
