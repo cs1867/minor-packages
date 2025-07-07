@@ -105,7 +105,7 @@ jobs:
              await github.rest.actions.createWorkflowDispatch({
                owner: 'cs1867',
                repo:  '${{ env.NEXTREPO}}',
-               workflow_id: 'reuse-i2util-workflow.yml',
+               workflow_id: 'i2util-workflow.yml',
                ref: 'github-workflow',
               inputs: {
                  BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
