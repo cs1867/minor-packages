@@ -1,4 +1,4 @@
-name: minor-packages-workflow
+name: bak-minor-packages-workflow
 
 on:
   workflow_dispatch: 
